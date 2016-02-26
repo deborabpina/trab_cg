@@ -1,1 +1,2 @@
-# trab_cg
+# escapeKey
+Trabalho Final de Computação Gráfica
