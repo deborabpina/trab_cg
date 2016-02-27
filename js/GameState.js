@@ -26,7 +26,7 @@ GameState.prototype =
         var camera= new BABYLON.FreeCamera("cam", new BABYLON.Vector3(0, 150, -340), scene);
         camera.setTarget(new BABYLON.Vector3(0,0,0));
         camera.applyGravity = true;
-        camera.attachControl(this.engine.getRenderingCanvas());
+        //camera.attachControl(this.engine.getRenderingCanvas());
 
         // Hemispheric light to light the scene
         var h = new BABYLON.HemisphericLight("hemi", new BABYLON.Vector3(0,1,0), scene);
