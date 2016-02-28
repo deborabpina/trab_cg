@@ -1,15 +1,17 @@
 var Key = function(game, scene, player, score, x, z)
 {
-	this.player   = player;
-  this.game     = game;
-  this.scene    = scene;
-	this.score    = score;
-	this.collided = false;
+	this.player        = player;
+  this.game          = game;
+  this.scene         = scene;
+	this.score         = score;
+	this.collided      = false;
+	this.collidedSound = new BABYLON.Sound("collectKey", "sounds/collectKey.wav", this.scene);
 
     /* MESH */
 	this.sphere            = BABYLON.Mesh.CreateSphere("key", 10.0, 6.0, scene);
 	this.sphere.position.y = 8;
 	this.sphere.position.z = z;
+	this.sphere.position.x = x;
   var matos              = new BABYLON.StandardMaterial("matos", this.scene);
   matos.diffuseColor     = BABYLON.Color3.Yellow();
   this.sphere.material   = matos;
@@ -43,6 +45,7 @@ Key.prototype =
 		{
 			this.collided     = true;
 			this.score.count += 1;
+			this.collidedSound.play();
 			this.destroy();
 		}
 	}
