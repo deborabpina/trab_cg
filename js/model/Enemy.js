@@ -130,6 +130,12 @@ Enemy.prototype =
 		if ((this.box.intersectsMesh(this.player.box, false))){
 			//the game ends when the player touchs the enemy
 			this.player.destroy();
+			var music = new BABYLON.Sound("Music", "sounds/game_over.wav", this.scene,
+			function () {
+			// Sound has been downloaded & decoded
+			music.play();
+			},{ loop: true, autoplay: true }
+			);
 			window.location = 'gameover.html';
 		}
 	},

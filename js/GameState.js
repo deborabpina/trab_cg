@@ -91,11 +91,19 @@ GameState.prototype =
 
     _initGame : function()
     {
+		// Load the sound and play it automatically once ready
+		var music = new BABYLON.Sound("Music", "sounds/cartoon001.wav", this.scene,
+		 function () {
+		  // Sound has been downloaded & decoded
+		  music.play();
+		 },{ loop: true, autoplay: true }
+		);
+		
         this.player = new Player(this.game, this.scene, this.gamepad, -120, 90);
         new Enemy(this.game, this.scene, 0, -80, this.player, [0,1,0,0]);
-    		this.score = new Score (this.game, this.scene, this.player);
-    		new Key (this.game, this.scene, this.player, this.score, 0, 100);
-    		new Key (this.game, this.scene, this.player, this.score, 0, -100);
-    		new Key (this.game, this.scene, this.player, this.score, 0, 50);
+    	this.score = new Score (this.game, this.scene, this.player);
+    	new Key (this.game, this.scene, this.player, this.score, 0, 100);
+    	new Key (this.game, this.scene, this.player, this.score, 0, -100);
+    	new Key (this.game, this.scene, this.player, this.score, 0, 50);
     }
 };
