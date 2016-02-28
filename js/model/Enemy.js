@@ -65,6 +65,12 @@ Enemy.prototype =
 			this.newPick = this.scene.pickWithRay(this.ray1).pickedPoint;
 			this.dist = this.scene.pickWithRay(this.ray1).distance;
 			//this.h = sqrt(2)*this.dist;
+			this.visionLight = new BABYLON.SpotLight("visionLight", new BABYLON.Vector3(this.box.position.x, this.box.position.y, this.box.position.z),
+				this.newPick, Math.PI/2, 0, this.scene);
+			this.visionLight.diffuse = new BABYLON.Color3(1, 0, 0);
+			this.visionLight.specular = new BABYLON.Color3(1, 0, 0);
+			//this.visionLight.excludeMeshes = [this.player.box]; PEGAR VERSAO NOVA NO GITHUB!!!!
+			this.visionLight.intensity = 50;
 			this.visionRange(this.newPick.x - this.dist, this.newPick.x + this.dist, this.newPick.y, this.newPick.z - this.dist, this.newPick.z - this.dist);
 		}
 		//Looking to the Right
@@ -122,7 +128,9 @@ Enemy.prototype =
 	{
 		if ((this.line2.intersectsMesh(this.player.box, false)) || (this.line3.intersectsMesh(this.player.box, false))){
 			// inimigo acompanha
-		}
+			console.log("viu");
+			this.targetPos = new BABYLON.Vector3(this.player.box.position.x, this.player.box.position.y, this.player.box.position.z);
+			
 	},
 	
 	collidedWithPlayer : function ()
