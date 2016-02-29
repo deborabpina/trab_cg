@@ -29,7 +29,6 @@ var Enemy = function(game, scene, x, z, player, direction)
 
 };
 
-
 Enemy.prototype =
 {
 
