@@ -19,6 +19,7 @@ var Enemy = function(game, scene, x, z, player, direction)
     this.box.material = matos;
 	this.box.isPickable = false;
 	this.firstTime = true;
+	this.haventSeen = true;
     // The enemy speed
     this.speed = 0.8;
 
@@ -49,45 +50,81 @@ Enemy.prototype =
 
     chooseDirection : function()
     {
-		this.dist = 50;
-		//Looking Up
-        if (this.mvtDirection[0] != 0) {
-			//Front ray
-			this.ray1 = new BABYLON.Ray(new BABYLON.Vector3(this.box.position.x, this.box.position.y, this.box.position.z), new BABYLON.Vector3(this.box.position.x, this.box.position.y, (150 - this.box.position.z)));
+    	if (this.haventSeen)
+    	{
+			//Looking Up
+	        if (this.mvtDirection[0] != 0) {
+				//Front ray
+				this.ray1 = new BABYLON.Ray(new BABYLON.Vector3(this.box.position.x, this.box.position.y, this.box.position.z), new BABYLON.Vector3(this.box.position.x, this.box.position.y, (150 - this.box.position.z)));
+				this.newPick = this.scene.pickWithRay(this.ray1).pickedPoint;
+				this.visionLight = new BABYLON.SpotLight("visionLight", new BABYLON.Vector3(this.box.position.x, this.box.position.y, this.box.position.z),
+					this.newPick, Math.PI/2, 0, this.scene);
+				this.visionLight.diffuse = new BABYLON.Color3(1, 0, 0);
+				this.visionLight.specular = new BABYLON.Color3(1, 0, 0);
+				this.visionLight.intensity = 50;
+				//this.visionRange(this.box.position.x - this.dist, this.box.position.x + this.dist, this.box.position.y, this.box.position.z + this.dist, this.box.position.z + this.dist);
+
+	        }
+			//Looking Down
+	        if (this.mvtDirection[1] != 0) {
+				//Front ray
+				this.ray1 = new BABYLON.Ray(new BABYLON.Vector3(this.box.position.x, this.box.position.y, this.box.position.z), new BABYLON.Vector3(this.box.position.x, this.box.position.y, (-150 - this.box.position.z)));
+				this.newPick = this.scene.pickWithRay(this.ray1).pickedPoint;
+				this.visionLight = new BABYLON.SpotLight("visionLight", new BABYLON.Vector3(this.box.position.x, this.box.position.y, this.box.position.z),
+					this.newPick, Math.PI/2, 0, this.scene);
+				this.visionLight.diffuse = new BABYLON.Color3(1, 0, 0);
+				this.visionLight.specular = new BABYLON.Color3(1, 0, 0);
+				this.visionLight.intensity = 50;
+				//this.visionLight.excludeMeshes = [this.player.box]; PEGAR VERSAO NOVA NO GITHUB!!!!
+				//this.visionRange(this.newPick.x - this.dist, this.newPick.x + this.dist, this.newPick.y, this.newPick.z - this.dist, this.newPick.z - this.dist);
+			
+			}
+			//Looking to the Right
+	        if (this.mvtDirection[2] != 0) {
+				//Front ray
+				this.ray1 = new BABYLON.Ray(new BABYLON.Vector3(this.box.position.x, this.box.position.y, this.box.position.z), new BABYLON.Vector3((150 - this.box.position.x), this.box.position.y, this.box.position.z));
+				this.newPick = this.scene.pickWithRay(this.ray1).pickedPoint;
+				this.visionLight = new BABYLON.SpotLight("visionLight", new BABYLON.Vector3(this.box.position.x, this.box.position.y, this.box.position.z),
+					this.newPick, Math.PI/2, 0, this.scene);
+				this.visionLight.diffuse = new BABYLON.Color3(1, 0, 0);
+				this.visionLight.specular = new BABYLON.Color3(1, 0, 0);
+				this.visionLight.intensity = 50;
+				//this.visionRange(this.box.position.x + this.dist, this.box.position.x + this.dist, this.box.position.y, this.box.position.z + this.dist, this.box.position.z - this.dist);
+
+	        }
+	        if (this.mvtDirection[3] != 0) {
+				//Front ray
+				this.ray1 = new BABYLON.Ray(new BABYLON.Vector3(this.box.position.x, this.box.position.y, this.box.position.z), new BABYLON.Vector3((-150 - this.box.position.x), this.box.position.y, this.box.position.z));
+				this.newPick = this.scene.pickWithRay(this.ray1).pickedPoint;
+				this.visionLight = new BABYLON.SpotLight("visionLight", new BABYLON.Vector3(this.box.position.x, this.box.position.y, this.box.position.z),
+					this.newPick, Math.PI/2, 0, this.scene);
+				this.visionLight.diffuse = new BABYLON.Color3(1, 0, 0);
+				this.visionLight.specular = new BABYLON.Color3(1, 0, 0);
+				this.visionLight.intensity = 50;
+				//this.visionRange(this.box.position.x - this.dist, this.box.position.x - this.dist, this.box.position.y, this.box.position.z + this.dist, this.box.position.z - this.dist);
+	
+	        }  
+	    }
+	     
+	    else
+	    {
+	      	this.ray1 = new BABYLON.Ray(new BABYLON.Vector3(this.box.position.x, this.box.position.y, this.box.position.z), this.targetPos);
 			this.newPick = this.scene.pickWithRay(this.ray1).pickedPoint;
-			this.dist = this.scene.pickWithRay(this.ray1).distance;
-			this.visionRange(this.box.position.x - this.dist, this.box.position.x + this.dist, this.box.position.y, this.box.position.z + this.dist, this.box.position.z + this.dist);
-        }
-		//Looking Down
-        if (this.mvtDirection[1] != 0) {
-			//Front ray
-			this.ray1 = new BABYLON.Ray(new BABYLON.Vector3(this.box.position.x, this.box.position.y, this.box.position.z), new BABYLON.Vector3(this.box.position.x, this.box.position.y, (-150 - this.box.position.z)));
-			this.newPick = this.scene.pickWithRay(this.ray1).pickedPoint;
-			this.dist = this.scene.pickWithRay(this.ray1).distance;
-			//this.h = sqrt(2)*this.dist;
 			this.visionLight = new BABYLON.SpotLight("visionLight", new BABYLON.Vector3(this.box.position.x, this.box.position.y, this.box.position.z),
-				this.newPick, Math.PI/2, 0, this.scene);
+					this.targetPos, Math.PI/2, 0, this.scene);
 			this.visionLight.diffuse = new BABYLON.Color3(1, 0, 0);
 			this.visionLight.specular = new BABYLON.Color3(1, 0, 0);
-			//this.visionLight.excludeMeshes = [this.player.box]; PEGAR VERSAO NOVA NO GITHUB!!!!
 			this.visionLight.intensity = 50;
-			this.visionRange(this.newPick.x - this.dist, this.newPick.x + this.dist, this.newPick.y, this.newPick.z - this.dist, this.newPick.z - this.dist);
-		}
-		//Looking to the Right
-        if (this.mvtDirection[2] != 0) {
-			//Front ray
-			this.ray1 = new BABYLON.Ray(new BABYLON.Vector3(this.box.position.x, this.box.position.y, this.box.position.z), new BABYLON.Vector3((150 - this.box.position.x), this.box.position.y, this.box.position.z));
-			this.newPick = this.scene.pickWithRay(this.ray1).pickedPoint;
-			this.dist = this.scene.pickWithRay(this.ray1).distance;
-			this.visionRange(this.box.position.x + this.dist, this.box.position.x + this.dist, this.box.position.y, this.box.position.z + this.dist, this.box.position.z - this.dist);
-        }
-        if (this.mvtDirection[3] != 0) {
-			//Front ray
-			this.ray1 = new BABYLON.Ray(new BABYLON.Vector3(this.box.position.x, this.box.position.y, this.box.position.z), new BABYLON.Vector3((-150 - this.box.position.x), this.box.position.y, this.box.position.z));
-			this.newPick = this.scene.pickWithRay(this.ray1).pickedPoint;
-			this.dist = this.scene.pickWithRay(this.ray1).distance;
-			this.visionRange(this.box.position.x - this.dist, this.box.position.x - this.dist, this.box.position.y, this.box.position.z + this.dist, this.box.position.z - this.dist);
-        }  
+			//this.visionLight.excludeMeshes = [this.player.box]; PEGAR VERSAO NOVA NO GITHUB!!!!
+
+	    }
+
+	    this.matrix1 = new BABYLON.Matrix.RotationY(Math.PI / 5,7);
+		this.P1 = new BABYLON.Vector3.TransformCoordinates(this.newPick, this.matrix1);
+		this.matrix2 = new BABYLON.Matrix.RotationY(-Math.PI / 5,7);
+		this.P2 = new BABYLON.Vector3.TransformCoordinates(this.newPick, this.matrix2);
+				
+		this.visionRange(this.P1.x, this.P2.x, 0, this.P1.z, this.P2.z);
     },
 
     destroy : function()
@@ -97,7 +134,7 @@ Enemy.prototype =
 	
 	visionRange : function(r2_x, r3_x, y, r2_z, r3_z)
 	{
-		//Angular rays - 45° from the front ray
+		//Angular rays 
 		this.ray2 = new BABYLON.Ray(new BABYLON.Vector3(this.box.position.x, this.box.position.y, this.box.position.z), new BABYLON.Vector3(r2_x, y, r2_z));
 		this.point2 = this.scene.pickWithRay(this.ray2).pickedPoint;
 		this.ray3 = new BABYLON.Ray(new BABYLON.Vector3(this.box.position.x, this.box.position.y, this.box.position.z), new BABYLON.Vector3(r3_x, y, r3_z));
@@ -105,32 +142,31 @@ Enemy.prototype =
 		
 		if (this.firstTime){
 			this.firstTime = false;
-			this.line1 = BABYLON.Mesh.CreateLines("line1", [new BABYLON.Vector3(this.box.position.x, this.box.position.y, this.box.position.z), this.newPick], this.scene);
-		    this.line1.Color = new BABYLON.Color3(1, 0, 0);
-			this.line2 = BABYLON.Mesh.CreateLines("line2", [new BABYLON.Vector3(this.box.position.x, this.box.position.y, this.box.position.z), this.point2], this.scene);
-		    this.line2.Color = new BABYLON.Color3(1, 0, 0);
-			this.line3 = BABYLON.Mesh.CreateLines("line3", [new BABYLON.Vector3(this.box.position.x, this.box.position.y, this.box.position.z), this.point3], this.scene);
-		    this.line3.Color = new BABYLON.Color3(1, 0, 0);
+			this.lines = BABYLON.Mesh.CreateLines("lines", [new BABYLON.Vector3(this.box.position.x, this.box.position.y, this.box.position.z), this.point2, 
+				new BABYLON.Vector3(this.box.position.x, this.box.position.y, this.box.position.z), this.point3], this.scene);
+		    this.lines.Color = new BABYLON.Color3(1, 0, 0);
 		}
-		if(this.oldPick != this.newPick){
-			this.eraseOldLine();
-			this.line1 = BABYLON.Mesh.CreateLines("line1", [new BABYLON.Vector3(this.box.position.x, this.box.position.y, this.box.position.z), this.newPick], this.scene);
-			this.line1.Color = new BABYLON.Color3(1, 0, 0);
-			this.line2 = BABYLON.Mesh.CreateLines("line2", [new BABYLON.Vector3(this.box.position.x, this.box.position.y, this.box.position.z), this.point2], this.scene);
-		    this.line2.Color = new BABYLON.Color3(1, 0, 0);
-			this.line3 = BABYLON.Mesh.CreateLines("line3", [new BABYLON.Vector3(this.box.position.x, this.box.position.y, this.box.position.z), this.point3], this.scene);
-		    this.line3.Color = new BABYLON.Color3(1, 0, 0);
+		else{
+			this.eraseVisionRange();
+			this.lines = BABYLON.Mesh.CreateLines("lines", [new BABYLON.Vector3(this.box.position.x, this.box.position.y, this.box.position.z), this.point2,
+				new BABYLON.Vector3(this.box.position.x, this.box.position.y, this.box.position.z), this.point3], this.scene);
+		    this.lines.Color = new BABYLON.Color3(1, 0, 0);
 		}
 		this.oldPick = this.newPick;
 	},
 	
 	seenPlayer : function()
 	{
-		if ((this.line2.intersectsMesh(this.player.box, false)) || (this.line3.intersectsMesh(this.player.box, false))){
+		if (this.lines.intersectsMesh(this.player.box, false)){
 			// inimigo acompanha
+			this.haventSeen = false;
 			console.log("viu");
 			this.targetPos = new BABYLON.Vector3(this.player.box.position.x, this.player.box.position.y, this.player.box.position.z);
-			
+			//this.eraseVisionRange();
+		}
+		else{
+			console.log("nao viu");
+		}
 	},
 	
 	collidedWithPlayer : function ()
@@ -148,10 +184,9 @@ Enemy.prototype =
 		}
 	},
 	
-	eraseOldLine: function ()
+	eraseVisionRange: function ()
 	{
-		this.line1.dispose();
-		this.line2.dispose();
-		this.line3.dispose();
+		this.lines.dispose();
+		this.visionLight.dispose();
 	}
 };
