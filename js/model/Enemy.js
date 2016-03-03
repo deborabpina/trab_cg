@@ -81,25 +81,20 @@ Enemy.prototype =
     	{
 			//Looking Up
 	        if (this.mvtDirection[0] != 0) {
-				//Front ray
 				this.ray1 = new BABYLON.Ray(new BABYLON.Vector3(this.box.position.x, this.box.position.y, this.box.position.z), new BABYLON.Vector3(this.box.position.x, this.box.position.y, (150 - this.box.position.z)));
 				this.newPick = this.scene.pickWithRay(this.ray1).pickedPoint;
 	        }
 			//Looking Down
 	        if (this.mvtDirection[1] != 0) {
-				//Front ray
 				this.ray1 = new BABYLON.Ray(new BABYLON.Vector3(this.box.position.x, this.box.position.y, this.box.position.z), new BABYLON.Vector3(this.box.position.x, this.box.position.y, (-150 - this.box.position.z)));
 				this.newPick = this.scene.pickWithRay(this.ray1).pickedPoint;
-				
 			}
 			//Looking to the Right
 	        if (this.mvtDirection[2] != 0) {
-				//Front ray
 				this.ray1 = new BABYLON.Ray(new BABYLON.Vector3(this.box.position.x, this.box.position.y, this.box.position.z), new BABYLON.Vector3((150 - this.box.position.x), this.box.position.y, this.box.position.z));
 				this.newPick = this.scene.pickWithRay(this.ray1).pickedPoint;
 	        }
 	        if (this.mvtDirection[3] != 0) {
-				//Front ray
 				this.ray1 = new BABYLON.Ray(new BABYLON.Vector3(this.box.position.x, this.box.position.y, this.box.position.z), new BABYLON.Vector3((-150 - this.box.position.x), this.box.position.y, this.box.position.z));
 				this.newPick = this.scene.pickWithRay(this.ray1).pickedPoint;				
 	        }  
@@ -115,9 +110,9 @@ Enemy.prototype =
 			this.newPick = this.targetPos;		
 	    }
 
-	    this.matrix1 = new BABYLON.Matrix.RotationY(Math.PI / 5,7);
+	    this.matrix1 = new BABYLON.Matrix.RotationY(Math.PI / 4);
 		this.P1 = new BABYLON.Vector3.TransformCoordinates(this.newPick, this.matrix1);
-		this.matrix2 = new BABYLON.Matrix.RotationY(-Math.PI / 5,7);
+		this.matrix2 = new BABYLON.Matrix.RotationY(-Math.PI / 4);
 		this.P2 = new BABYLON.Vector3.TransformCoordinates(this.newPick, this.matrix2);
 
 		this.visionRange(this.P1.x, this.P2.x, 0, this.P1.z, this.P2.z);
@@ -191,18 +186,14 @@ Enemy.prototype =
 		this.oldPick = this.newPick;
 	},
 	
+	//Check if the player was seen by the enemy
 	seenPlayer : function()
 	{
 		if (this.lines.intersectsMesh(this.player.box, false)){
-			// inimigo acompanha
+			//Set target point to the latest player position "seen" by the enemy
 			this.haventSeen = false;
-			console.log("viu");
 			this.targetPos = new BABYLON.Vector3(this.player.box.position.x, this.player.box.position.y, this.player.box.position.z);
 			this.move();
-			//this.eraseVisionRange();
-		}
-		else{
-			console.log("nao viu");
 		}
 	},
 	
