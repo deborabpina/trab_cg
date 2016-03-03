@@ -2,19 +2,19 @@ var Score = function(game, scene, player)
 {
     this.game   = game;
     this.scene  = scene;
-	  this.player = player;
-	  this.count  = 0;
+	this.player = player;
+	this.count  = 0;
 
     /* MESH */
-	  var mat              = new BABYLON.StandardMaterial("mat", this.scene);
+	var mat              = new BABYLON.StandardMaterial("mat", this.scene);
     mat.diffuseColor     = BABYLON.Color3.FromInts(255,0,0);
     this.door            = BABYLON.Mesh.CreateBox("box", 1.0, this.scene);
     this.door.scaling    = new BABYLON.Vector3(2,10,20);
-		this.door.position.x = 150;
-		this.door.position.y = 5;
+	this.door.position.x = 150;
+	this.door.position.y = 5;
     this.door.position.z = 140;
     this.door.material   = mat;
-		this.door.isPickable = false;
+	this.door.isPickable = false;
     this.door.setPhysicsState(BABYLON.PhysicsEngine.BoxImpostor, {mass:0, restitution:0.5, friction:0.1});
 
 	var _this = this;
@@ -34,7 +34,6 @@ Score.prototype =
 
 	verify : function ()
 	{
-		//console.log(this.count);
 		if (this.count == 3){
 			this.openDoor();
 		}
@@ -48,7 +47,7 @@ Score.prototype =
 
     if (this.door.intersectsMesh(this.player.box, false))
     {
-			//chama proxima fase
+			//CALL NEXT STAGE
 			this.destroy();
 		}
 	}
