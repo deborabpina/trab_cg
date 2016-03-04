@@ -68,7 +68,7 @@ Enemy.prototype =
 		{
             this.box.applyImpulse(new BABYLON.Vector3(s,0,0), this.box.position);
         }
-        this.body.body.linearVelocity.scaleEqual(0.92);
+        this.body.body.linearVelocity.scaleEqual(0.98);
         this.body.body.angularVelocity.scaleEqual(0.8);
 	},
 
