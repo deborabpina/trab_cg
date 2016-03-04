@@ -108,6 +108,7 @@ StageOne.prototype =
         this.score  = new Score (this.game, this.scene, this.player);
 
         new Enemy(this.game, this.scene, 0, -80, this.player, [0,1,0,0]);
+        new Enemy(this.game, this.scene, 0, 50, this.player, [1,0,0,0]);
         new Key (this.game, this.scene, this.player, this.score, 0, 100);
         new Key (this.game, this.scene, this.player, this.score, 0, -100);
         new Key (this.game, this.scene, this.player, this.score, 120, 50);
