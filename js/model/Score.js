@@ -54,6 +54,7 @@ Score.prototype =
     {
 			//CALL NEXT STAGE
 			this.destroy();
+      this.game.runNextState();
 		}
 	}
 };

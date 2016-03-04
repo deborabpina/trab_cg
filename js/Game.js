@@ -38,6 +38,13 @@ Game.STATES =
         {
             return new StageOne(game);
         }
+    },
+    { // The final state
+        title:"Game Over",
+        create:function(game)
+        {
+            return new GameOver(game);
+        }
     }
 ];
 
@@ -54,11 +61,18 @@ Game.prototype =
           this.previousState.music.stop();
         }
         // The starting state of the game
+        console.log(this.currentStateId);
         this.currentState = Game.STATES[this.currentStateId].create(this);
 
         // Create the starting scene
         this.currentState.run();
         this.currentStateId ++;
+    },
+
+    runLastState : function()
+    {
+      this.currentStateId = 2;
+      this.runNextState();
     },
 
     /**

@@ -154,7 +154,7 @@ Enemy.prototype =
 		if ((this.box.intersectsMesh(this.player.box, false))){
 			//The game ends when the player touchs the enemy
 			this.player.destroy();
-			window.location = 'gameover.html';
+			this.game.runLastState();
 		}
 	},
 
