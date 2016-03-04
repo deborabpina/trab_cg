@@ -90,24 +90,11 @@ StageOne.prototype =
 
     _initGame : function()
     {
-        //Load the sound and play it automatically once ready
-        // var music = new BABYLON.Sound
-        // (
-        //   "Music", "sounds/justMove.mp3", this.scene,
-        //   function ()
-        //   {
-        //   // Sound has been downloaded & decoded
-        //   music.play();
-        //   },
-        //   { loop: true, autoplay: true }
-        // );
-        // music.setVolume(0.05);
-        // this.music = music;
-
         this.player = new Player(this.game, this.scene, this.gamepad, -120, 90);
-        this.score  = new Score (this.game, this.scene, this.player);
+        this.score  = new Score (this.game, this.scene, this.player, 150, 5, 140,3);
 
         new Enemy(this.game, this.scene, 0, -80, this.player, [0,1,0,0]);
+
         new Key (this.game, this.scene, this.player, this.score, 0, 100);
         new Key (this.game, this.scene, this.player, this.score, 0, -100);
         new Key (this.game, this.scene, this.player, this.score, 120, 50);

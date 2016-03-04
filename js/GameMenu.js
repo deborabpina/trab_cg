@@ -94,7 +94,7 @@ GameMenu.prototype =
     {
 
     },
-
+    
     createGUI : function()
     {
       var css = "button{cursor:pointer;}";
@@ -159,7 +159,5 @@ GameMenu.prototype =
         x:(guisystem.getCanvasWidth().width / 2 - 100), y: 300, w:200, h:35, value:"HELP"
       };
       var helpButton = new CASTORGUI.GUIButton("helpButtonGUI",helpOptions, guisystem, helpFunction);
-
-
     }
 };

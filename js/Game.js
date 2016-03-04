@@ -48,6 +48,7 @@ Game.prototype =
     runNextState : function()
     {
         this.previousState = this.currentState;
+        //stop music of state
         if (this.previousState != null)
         {
           this.previousState.music.stop();
