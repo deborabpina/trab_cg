@@ -39,6 +39,13 @@ Game.STATES =
             return new StageOne(game);
         }
     },
+    { // you win state
+        title:"You Win",
+        create:function(game)
+        {
+            return new YouWin(game);
+        }
+    },
     { // The final state
         title:"Game Over",
         create:function(game)
@@ -71,7 +78,7 @@ Game.prototype =
 
     runLastState : function()
     {
-      this.currentStateId = 2;
+      this.currentStateId = 3;
       this.runNextState();
     },
 

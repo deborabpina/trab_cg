@@ -1,13 +1,13 @@
-var GameOver = function(game)
+var YouWin = function(game)
 {
     State.call(this, game);
     // All gamepad id currently connected
     this.gamepadIds = [];
 };
 
-GameOver.prototype = Object.create(State.prototype);
-GameOver.prototype.constructor = GameOver;
-GameOver.prototype =
+YouWin.prototype = Object.create(State.prototype);
+YouWin.prototype.constructor = YouWin;
+YouWin.prototype =
 {
 
     _initScene : function()
@@ -41,7 +41,7 @@ GameOver.prototype =
       var assets = [];
       var toLoad =
       [
-          {name : "gameover",    src : "js/img/gameOver.png" }
+          {name : "youwin",    src : "js/img/youwin.png" }
       ];
 
       toLoad.forEach(function(obj)
@@ -107,7 +107,7 @@ GameOver.prototype =
         x: (game.canvas.width/2)-410,
         y: 50
       };
-      var logo = new CASTORGUI.GUITexture("logo", "js/img/gameOver.png", logoOptions,guisystem, null);
+      var logo = new CASTORGUI.GUITexture("youwin", "js/img/youwin.png", logoOptions,guisystem, null);
 
       //menu button
       var reloadFunction = function()
